@@ -3,11 +3,13 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ShoeShow-frontend-user": {
+    "day2": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "standalone": false
+          "standalone": false,
+          "prefix": "app",
+          "type": "component"
         },
         "@schematics/angular:directive": {
           "standalone": false
@@ -29,13 +31,15 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/assets",
+              "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
@@ -66,10 +70,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ShoeShow-frontend-user:build:production"
+              "buildTarget": "day2:build:production"
             },
             "development": {
-              "buildTarget": "ShoeShow-frontend-user:build:development"
+              "buildTarget": "day2:build:development"
             }
           },
           "defaultConfiguration": "development"

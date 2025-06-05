@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+/* Make body and html take full height */
+/*html, body {*/
+/*  height: 100%;*/
+/*  margin: 0;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
+
+/*!* Make app-root fill remaining height *!*/
+/*app-root {*/
+/*  flex: 1;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
+
+/*!* Main content area should grow to fill space *!*/
+/*.main-content {*/
+/*  flex: 1;*/
+/*}*/
+
+/*.carousel-control-prev-icon,*/
+/*.carousel-control-next-icon {*/
+/*  background-color: rgba(0, 0, 0, 0.6);*/
+/*  color: white;*/
+/*}*/
+
+/*.carousel-indicators [data-bs-target] {*/
+/*  background-color: rgba(0, 0, 0, 0.6);*/
+/*}*/
+

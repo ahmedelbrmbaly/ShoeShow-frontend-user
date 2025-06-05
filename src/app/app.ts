@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './app.css'
 })
 export class App {
-  protected title = 'ShoeShow-frontend-user';
+  protected title = 'day2';
 }
