@@ -1,0 +1,54 @@
+<div class="orders-container">
+  <h1>Order History</h1>
+
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else if (error) {
+    <div class="error-container">
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadOrders()">Try Again</button>
+    </div>
+  } @else if (orders.length === 0) {
+    <div class="empty-orders">
+      <p>You haven't placed any orders yet</p>
+      <button mat-raised-button color="primary" (click)="continueShopping()">Start Shopping</button>
+    </div>
+  } @else {
+    <div class="orders-content">
+      <table mat-table [dataSource]="orders" class="orders-table">
+        <!-- Order ID Column -->
+        <ng-container matColumnDef="orderId">
+          <th mat-header-cell *matHeaderCellDef>Order ID</th>
+          <td mat-cell *matCellDef="let order">#{{ order.orderId }}</td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Order Date</th>
+          <td mat-cell *matCellDef="let order">{{ formatDate(order.createdAt) }}</td>
+        </ng-container>
+
+        <!-- Total Amount Column -->
+        <ng-container matColumnDef="totalAmount">
+          <th mat-header-cell *matHeaderCellDef>Total Amount</th>
+          <td mat-cell *matCellDef="let order">${{ order.totalAmount }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="orderStatus">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let order">
+            <mat-chip-option [color]="getStatusColor(order.orderStatus)" selected>
+              {{ order.orderStatus }}
+            </mat-chip-option>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  }
+</div>

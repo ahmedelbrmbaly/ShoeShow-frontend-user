@@ -1,0 +1,41 @@
+.filters-container {
+  padding: 1rem;
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filters-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.color-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep .mat-option {
+  height: 36px !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  margin-bottom: 0.5rem;
+}

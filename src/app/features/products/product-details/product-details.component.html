@@ -1,0 +1,109 @@
+<div class="product-details-container">
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else if (error) {
+    <div class="error-container">
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadProduct(product?.productId!)">Try Again</button>
+    </div>
+  } @else if (product) {
+    <div class="product-grid">
+      <div class="image-section">
+        <div class="main-image">
+          <img [src]="getImageUrl(product.img[selectedImage])" [alt]="product.name">
+        </div>
+        <div class="image-thumbnails">
+          @for (image of product.img; track image; let i = $index) {
+            <div class="thumbnail"
+                [class.selected]="selectedImage === i"
+                (click)="onImageSelect(i)">
+              <img [src]="getImageUrl(image)" [alt]="product.name + ' thumbnail ' + (i + 1)">
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="details-section">
+        <h1>{{ product.name }}</h1>
+        <p class="price">${{ product.price.toFixed(2) }}</p>
+        <p class="description">{{ product.description }}</p>
+
+        <form [formGroup]="addToCartForm" (ngSubmit)="addToCart()" class="variation-form">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Color</mat-label>
+              <mat-select formControlName="color">
+                <mat-option>Select a color</mat-option>
+                @for (color of availableColors; track color) {
+                  <mat-option [value]="color">
+                    <div class="color-option">
+                      <span class="color-dot" [style.background-color]="color.toLowerCase()"></span>
+                      {{ color }}
+                    </div>
+                  </mat-option>
+                }
+              </mat-select>
+              <mat-error *ngIf="addToCartForm.get('color')?.hasError('required')">
+                Please select a color
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Size</mat-label>
+              <mat-select formControlName="size" [disabled]="!addToCartForm.get('color')?.value">
+                <mat-option>Select a size</mat-option>
+                @for (size of availableSizes; track size) {
+                  <mat-option [value]="size">{{ getDisplaySize(size) }}</mat-option>
+                }
+              </mat-select>
+              <mat-error *ngIf="addToCartForm.get('size')?.hasError('required')">
+                Please select a size
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Quantity</mat-label>
+              <input matInput type="number" formControlName="quantity" min="1"
+                     [max]="selectedProductInfo?.quantity || 1"
+                     [disabled]="!selectedProductInfo">
+              <mat-error *ngIf="addToCartForm.get('quantity')?.hasError('required')">
+                Please enter a quantity
+              </mat-error>
+              <mat-error *ngIf="addToCartForm.get('quantity')?.hasError('min')">
+                Quantity must be at least 1
+              </mat-error>
+              <mat-error *ngIf="addToCartForm.get('quantity')?.hasError('max')">
+                Quantity cannot exceed available stock
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          @if (selectedProductInfo) {
+            <p class="stock-info" [class.low-stock]="selectedProductInfo.quantity < 5">
+              {{ getStockStatus(selectedProductInfo.quantity) }}
+            </p>
+          }
+
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" type="submit"
+                    [disabled]="addToCartForm.invalid || !selectedProductInfo || submitting">
+              <mat-icon>shopping_cart</mat-icon>
+              Add to Cart
+              @if (submitting) {
+                <mat-spinner diameter="20"></mat-spinner>
+              }
+            </button>
+            <button mat-stroked-button color="accent" type="button"
+                    (click)="addToWishlist()" [disabled]="submitting">
+              <mat-icon>favorite</mat-icon>
+              Add to Wishlist
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

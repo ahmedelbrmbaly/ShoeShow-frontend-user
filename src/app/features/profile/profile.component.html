@@ -1,0 +1,113 @@
+<div class="profile-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Profile Information</mat-card-title>
+    </mat-card-header>
+
+    @if (loading) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else if (error) {
+      <div class="error-container">
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="loadUserProfile()">Try Again</button>
+      </div>
+    } @else if (user) {
+      <mat-card-content>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name" [readonly]="!isEditing">
+              <mat-error *ngIf="profileForm.get('name')?.hasError('required')">
+                Name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phoneNumber" [readonly]="!isEditing">
+              <mat-error *ngIf="profileForm.get('phoneNumber')?.hasError('required')">
+                Phone number is required
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('phoneNumber')?.hasError('pattern')">
+                Please enter a valid phone number
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" [readonly]="!isEditing">
+              <mat-error *ngIf="profileForm.get('email')?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('email')?.hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Birth Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="birthdate" [readonly]="!isEditing">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="profileForm.get('birthdate')?.hasError('required')">
+                Birth date is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Job</mat-label>
+              <input matInput formControlName="job" [readonly]="!isEditing">
+              <mat-error *ngIf="profileForm.get('job')?.hasError('required')">
+                Job is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Interests</mat-label>
+              <input matInput formControlName="interests" [readonly]="!isEditing">
+            </mat-form-field>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="addresses-section">
+            <h3>Addresses</h3>
+            @for (address of user.addresses; track address.addressId) {
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ address.street }}
+                    @if (address.isDefault) {
+                      <span class="default-badge">Default</span>
+                    }
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p><strong>Building Number:</strong> {{ address.buildingNumber }}</p>
+                <p><strong>Street:</strong> {{ address.street }}</p>
+                <p><strong>State:</strong> {{ address.state }}</p>
+              </mat-expansion-panel>
+            }
+          </div>
+
+          <div class="profile-actions">
+            @if (!isEditing) {
+              <button mat-raised-button color="primary" type="button" (click)="toggleEdit()">
+                Edit Profile
+              </button>
+            } @else {
+              <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">
+                Save Changes
+              </button>
+              <button mat-stroked-button type="button" (click)="toggleEdit()">
+                Cancel
+              </button>
+            }
+          </div>
+        </form>
+      </mat-card-content>
+    }
+  </mat-card>
+</div>

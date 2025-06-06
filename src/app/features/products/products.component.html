@@ -1,0 +1,60 @@
+<mat-drawer-container class="products-container">
+  <mat-drawer #drawer [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile">
+    <app-product-filters
+      [currentFilters]="currentFilters"
+      (filtersChange)="onFiltersChange($event)">
+    </app-product-filters>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <div class="content">
+      <div class="header">
+        <h1>Our Products</h1>
+        @if (isMobile) {
+          <button mat-raised-button color="primary" (click)="drawer.toggle()">
+            Filters
+          </button>
+        }
+      </div>
+
+      @if (loading) {
+        <div class="loading-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      } @else if (error) {
+        <div class="error-container">
+          <p>{{ error }}</p>
+          <button mat-raised-button color="primary" (click)="loadProducts()">Try Again</button>
+        </div>
+      } @else {
+        <div class="products-grid">
+          @for (product of products; track product.productId) {
+            <mat-card class="product-card">
+              <img mat-card-image [src]="getImageUrl(product.img[0])" [alt]="product.name">
+              <mat-card-content>
+                <h3>{{ product.name }}</h3>
+                <p class="price">${{ product.price }}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button color="primary" [routerLink]="['/products', product.productId]">
+                  View Details
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          } @empty {
+            <p class="no-products">No products found matching your criteria.</p>
+          }
+        </div>
+
+        <mat-paginator
+          [length]="totalProducts"
+          [pageSize]="pageSize"
+          [pageIndex]="currentPage"
+          [pageSizeOptions]="[10, 20, 50]"
+          (page)="onPageChange($event)"
+          aria-label="Select page">
+        </mat-paginator>
+      }
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
