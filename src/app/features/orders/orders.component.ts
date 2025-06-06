@@ -3,9 +3,18 @@ import { Router } from '@angular/router';
 import { OrderService } from '../../core/services/order.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Order } from '../../core/models/user.model';
-import {MatTable} from '@angular/material/table';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from '@angular/material/table';
 import {MatChipOption} from '@angular/material/chips';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-orders',
@@ -13,7 +22,17 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
   imports: [
     MatTable,
     MatChipOption,
-    MatProgressSpinner
+    MatProgressSpinner,
+    MatHeaderCell,
+    MatColumnDef,
+    MatCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    MatButton
   ],
   styleUrls: ['./orders.component.css']
 })

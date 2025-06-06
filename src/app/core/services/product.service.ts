@@ -24,7 +24,7 @@ export class ProductService {
       }
       if (filters.size?.length) {
         filters.size.forEach(size => {
-          params = params.append('size[]', size);
+          params = params.append('size[]', size.replace('SIZE_', ''));
         });
       }
       if (filters.color?.length) {
