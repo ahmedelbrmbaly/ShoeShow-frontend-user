@@ -111,7 +111,7 @@ export class CartComponent implements OnInit {
         this.router.navigate(['/orders']);
       },
       error: (error) => {
-        this.snackBar.open('Failed to place order. Please try again.', 'Close', { duration: 3000 });
+        this.snackBar.open(error.error.message, 'Close', { duration: 3000 });
       }
     });
   }
