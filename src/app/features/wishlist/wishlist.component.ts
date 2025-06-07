@@ -7,8 +7,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { WishlistItem } from '../../core/models/product.model';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIcon} from '@angular/material/icon';
-import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
+import {MatCard, MatCardActions, MatCardContent, MatCardImage} from '@angular/material/card';
 import { environment } from '../../../environments/environment';
+import {MatButton, MatIconButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-wishlist',
@@ -18,7 +19,10 @@ import { environment } from '../../../environments/environment';
     MatIcon,
     MatCardActions,
     MatCard,
-    MatCardContent
+    MatCardContent,
+    MatButton,
+    MatCardImage,
+    MatIconButton
   ],
   styleUrls: ['./wishlist.component.css']
 })

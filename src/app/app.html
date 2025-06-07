@@ -1,135 +1,190 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- HTML Template -->
+<mat-toolbar color="primary" class="header" [class.header-scrolled]="headerScrolled">
+  <!-- Hamburger menu button visible only on mobile -->
+  <button
+    mat-icon-button
+    (click)="sidenav.toggle()"
+    class="mobile-menu-button"
+    aria-label="Open navigation menu"
+    [attr.aria-expanded]="sidenav.opened"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
 
-<mat-toolbar color="primary" class="header">
-  <span class="logo" routerLink="/" style="cursor: pointer">ShoeShow</span>
-
-  <div class="nav-links">
-    <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <a mat-button routerLink="/products" routerLinkActive="active">Products</a>
-    <a mat-button routerLink="/about" routerLinkActive="active">About</a>
+  <!-- Logo with gradient text effect -->
+  <div class="logo-container">
+    <a class="logo" routerLink="/" aria-label="ShoeShow Home">
+      <img src="assets/images/logo.png" alt="ShoeShow Logo" class="logo-img" width="30" height="30">
+      <span>ShoeShow</span>
+    </a>
   </div>
 
-  <span class="spacer"></span>
+  <!-- Desktop nav links with modern styling -->
+  <nav class="nav-links">
+    <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </a>
+    <a mat-button routerLink="/products" routerLinkActive="active" class="nav-link">
+      <mat-icon>inventory_2</mat-icon>
+      <span>Products</span>
+    </a>
+    <a mat-button routerLink="/about" routerLinkActive="active" class="nav-link">
+      <mat-icon>info</mat-icon>
+      <span>About</span>
+    </a>
+  </nav>
+
+  <div class="spacer"></div>
+
 
   <div class="auth-section">
-    @if (!(isAuthenticated$ | async)) {
-      <a mat-button routerLink="/auth/login" routerLinkActive="active">Login</a>
-      <a mat-button routerLink="/auth/register" routerLinkActive="active">Register</a>
-    } @else {
-      <a mat-icon-button routerLink="/cart" routerLinkActive="active" aria-label="Shopping Cart">
-        <mat-icon>shopping_cart</mat-icon>
-      </a>
-      <a mat-icon-button routerLink="/wishlist" routerLinkActive="active" aria-label="Wishlist">
-        <mat-icon>favorite</mat-icon>
-      </a>
-      <button mat-button [matMenuTriggerFor]="menu" aria-label="User Menu">
-        <mat-icon>person</mat-icon>
+    <!-- Show Login/Register if not authenticated -->
+    <ng-container *ngIf="!(isAuthenticated$ | async); else loggedIn">
+      <button mat-flat-button routerLink="/auth/login" routerLinkActive="active" class="auth-btn login-btn">
+        Login
       </button>
-      <mat-menu #menu="matMenu">
-        <a mat-menu-item routerLink="/profile">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
-        </a>
-        <a mat-menu-item routerLink="/orders">
-          <mat-icon>receipt_long</mat-icon>
-          <span>Orders</span>
-        </a>
-        <button mat-menu-item (click)="onLogout()">
-          <mat-icon>logout</mat-icon>
-          <span>Logout</span>
+      <button mat-flat-button routerLink="/auth/register" routerLinkActive="active" class="auth-btn register-btn">
+        Register
+      </button>
+    </ng-container>
+
+    <!-- Show icons and menu if authenticated -->
+    <ng-template #loggedIn>
+      <div class="user-actions">
+        <button mat-icon-button routerLink="/cart" routerLinkActive="active" aria-label="Shopping Cart" class="action-btn">
+          <mat-icon [matBadge]="cartCount" matBadgeColor="warn" [matBadgeHidden]="cartCount === 0">shopping_cart</mat-icon>
         </button>
-      </mat-menu>
-    }
+        <button mat-icon-button routerLink="/wishlist" routerLinkActive="active" aria-label="Wishlist" class="action-btn">
+          <mat-icon [matBadge]="wishlistCount" matBadgeColor="accent" [matBadgeHidden]="wishlistCount === 0">favorite</mat-icon>
+        </button>
+
+        <button mat-button [matMenuTriggerFor]="menu" aria-label="User Menu" class="user-menu-btn">
+          <span class="username">{{currentUser?.name || 'User'}}</span>
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" class="user-dropdown">
+          <div class="user-info">
+            <div class="user-details">
+              <h4>{{currentUser?.name || 'User'}}</h4>
+              <p>{{currentUser?.email || 'No email available'}}</p>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <a mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </a>
+          <a mat-menu-item routerLink="/orders">
+            <mat-icon>receipt_long</mat-icon>
+            <span>Orders</span>
+          </a>
+          <a mat-menu-item routerLink="/settings">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </a>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="refreshUserData()" class="refresh-btn">
+            <mat-icon>refresh</mat-icon>
+            <span>Refresh Data</span>
+          </button>
+          <button mat-menu-item (click)="onLogout()" class="logout-btn">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </ng-template>
   </div>
 </mat-toolbar>
 
-<div class="content">
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="over" class="mobile-sidenav" role="navigation" aria-label="Mobile Navigation">
+    <!-- Mobile sidenav header -->
+    <div class="sidenav-header">
+      <div class="sidenav-logo">
+        <mat-icon class="logo-icon">storefront</mat-icon>
+        <span>ShoeShow</span>
+      </div>
+      <button mat-icon-button (click)="sidenav.close()" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
 
-<app-footer></app-footer>
 
-<style>
-  :host {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    --bright-blue: oklch(51.01% 0.274 263.83);
-    --electric-violet: oklch(53.18% 0.28 296.97);
-    --french-violet: oklch(47.66% 0.246 305.88);
-    --vivid-pink: oklch(69.02% 0.277 332.77);
-    --hot-red: oklch(61.42% 0.238 15.34);
-    --orange-red: oklch(63.32% 0.24 31.68);
-    --gray-900: oklch(19.37% 0.006 300.98);
-    --gray-700: oklch(36.98% 0.014 302.71);
-    --gray-400: oklch(70.9% 0.015 304.04);
 
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+    <nav class="sidenav-nav">
+      <a mat-list-item routerLink="/" routerLinkActive="active" (click)="sidenav.close()" class="nav-item">
+        <mat-icon matListIcon>home</mat-icon>
+        <span matLine>Home</span>
+      </a>
+      <a mat-list-item routerLink="/products" routerLinkActive="active" (click)="sidenav.close()" class="nav-item">
+        <mat-icon matListIcon>inventory_2</mat-icon>
+        <span matLine>Products</span>
+      </a>
+      <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="sidenav.close()" class="nav-item">
+        <mat-icon matListIcon>info</mat-icon>
+        <span matLine>About</span>
+      </a>
 
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-  }
+      <mat-divider class="nav-divider"></mat-divider>
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: white;
-    margin-right: 32px;
-  }
+      <!-- Authentication links in sidenav -->
+      <ng-container *ngIf="!(isAuthenticated$ | async); else loggedInMobile">
+        <a mat-list-item routerLink="/auth/login" (click)="sidenav.close()" class="nav-item auth-item">
+          <mat-icon matListIcon>login</mat-icon>
+          <span matLine>Login</span>
+        </a>
+        <a mat-list-item routerLink="/auth/register" (click)="sidenav.close()" class="nav-item auth-item">
+          <mat-icon matListIcon>person_add</mat-icon>
+          <span matLine>Register</span>
+        </a>
+      </ng-container>
 
-  .nav-links {
-    display: flex;
-    gap: 8px;
-  }
+      <ng-template #loggedInMobile>
+        <div class="mobile-user-info">
+          <div class="mobile-avatar">
+            <span class="avatar-initials" *ngIf="currentUser?.name">{{getInitials(currentUser?.name)}}</span>
+            <mat-icon *ngIf="!currentUser?.name">person</mat-icon>
+          </div>
+          <div class="mobile-user-details">
+            <h4>{{currentUser?.name || 'User'}}</h4>
+            <p>{{currentUser?.email || 'No email available'}}</p>
+          </div>
+        </div>
+        <a mat-list-item routerLink="/cart" (click)="sidenav.close()" class="nav-item">
+          <mat-icon matListIcon [matBadge]="cartCount" matBadgeColor="warn" [matBadgeHidden]="cartCount === 0">shopping_cart</mat-icon>
+          <span matLine>Cart</span>
+        </a>
+        <a mat-list-item routerLink="/wishlist" (click)="sidenav.close()" class="nav-item">
+          <mat-icon matListIcon [matBadge]="wishlistCount" matBadgeColor="accent" [matBadgeHidden]="wishlistCount === 0">favorite</mat-icon>
+          <span matLine>Wishlist</span>
+        </a>
 
-  .spacer {
-    flex: 1 1 auto;
-  }
+        <a mat-list-item routerLink="/profile" (click)="sidenav.close()" class="nav-item">
+          <mat-icon matListIcon>person</mat-icon>
+          <span matLine>Profile</span>
+        </a>
+        <a mat-list-item routerLink="/orders" (click)="sidenav.close()" class="nav-item">
+          <mat-icon matListIcon>receipt_long</mat-icon>
+          <span matLine>Orders</span>
+        </a>
+        <a mat-list-item routerLink="/settings" (click)="sidenav.close()" class="nav-item">
+          <mat-icon matListIcon>settings</mat-icon>
+          <span matLine>Settings</span>
+        </a>
+        <button mat-list-item (click)="onLogout(); sidenav.close()" class="nav-item logout-item">
+          <mat-icon matListIcon>logout</mat-icon>
+          <span matLine>Logout</span>
+        </button>
+      </ng-template>
+    </nav>
+  </mat-sidenav>
 
-  .auth-section {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .content {
-    flex: 1;
-    padding: 0.5rem;
-    width: 98%;
-    max-width: 1800px;
-    margin: 0 auto;
-  }
-
-  .active {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  @media (max-width: 600px) {
-    .nav-links {
-      display: none;
-    }
-
-    .auth-section {
-      gap: 4px;
-    }
-  }
-</style>
+  <mat-sidenav-content>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

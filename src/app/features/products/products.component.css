@@ -1,6 +1,10 @@
 .products-container {
-  height: calc(100vh - 64px);
+  /* Remove fixed height */
+  min-height: calc(100vh - 64px); /* Optional: ensures at least viewport height minus header */
+  display: flex;
+  gap: 20px;
 }
+
 
 mat-drawer {
   width: 280px;

@@ -22,6 +22,7 @@ export interface Product {
 }
 
 export interface CartItem {
+    itemId: number;
     productId: number;
     productInfoId: number;
     userId: number;

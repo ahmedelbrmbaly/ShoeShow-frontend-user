@@ -1,5 +1,7 @@
 .filters-container {
   padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .filters-header {
@@ -11,12 +13,19 @@
 
 .filters-header h2 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .full-width {
   width: 100%;
   margin-bottom: 1rem;
+}
+
+/* Make form a grid with gap */
+form[formGroup] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
 }
 
 .color-option {
@@ -32,10 +41,19 @@
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+/* Remove fixed height on mat-option for flexibility */
 ::ng-deep .mat-option {
-  height: 36px !important;
+  /* height: auto !important; */
+  min-height: 36px; /* optional */
 }
 
 ::ng-deep .mat-form-field-wrapper {
   margin-bottom: 0.5rem;
+}
+
+/* Responsive tweak: On small screens, 1 column */
+@media (max-width: 480px) {
+  form[formGroup] {
+    grid-template-columns: 1fr;
+  }
 }

@@ -87,12 +87,13 @@ export class CartComponent implements OnInit {
   }
 
   removeItem(item: CartItem): void {
+    console.log(item);
     const userId = this.authService.getCurrentUserId();
     if (!userId) return;
 
-    this.cartService.removeFromCart(userId, item.productInfoId).subscribe({
+    this.cartService.removeFromCart(userId, item.itemId).subscribe({
       next: () => {
-        this.cartItems = this.cartItems.filter(i => i.productInfoId !== item.productInfoId);
+        this.cartItems = this.cartItems.filter(i => i.itemId !== item.itemId);
         this.snackBar.open('Item removed from cart', 'Close', { duration: 3000 });
       },
       error: (error) => {
