@@ -150,3 +150,4 @@ export class CartComponent implements OnInit {
     return `${environment.imageBaseUrl}/${imagePath}`;
   }
 }
+
