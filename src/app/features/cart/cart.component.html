@@ -11,12 +11,12 @@
       <button mat-raised-button color="primary" (click)="loadCart()">Try Again</button>
     </div>
   } @else if (cartItems.length === 0) {
-    <div class="empty-cart">
+    <div class="empty-cart" data-aos="fade-up">
       <p>Your cart is empty</p>
       <button mat-raised-button color="primary" (click)="continueShopping()">Continue Shopping</button>
     </div>
   } @else {
-    <div class="cart-content">
+    <div class="cart-content" data-aos="fade-up">
       <table mat-table [dataSource]="cartItems" class="cart-table">
         <!-- Image Column -->
         <ng-container matColumnDef="image">

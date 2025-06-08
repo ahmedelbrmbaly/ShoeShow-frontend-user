@@ -11,7 +11,7 @@
     </div>
   } @else if (product) {
     <div class="product-grid">
-      <div class="image-section">
+      <div class="image-section" data-aos="fade-right" data-aos-duration="800">
         <div class="main-image">
           <img [src]="getImageUrl(product.img[selectedImage])" [alt]="product.name">
         </div>
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="details-section">
+      <div class="details-section" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
         <h1>{{ product.name }}</h1>
         <p class="price">${{ product.price.toFixed(2) }}</p>
         <p class="description">{{ product.description }}</p>

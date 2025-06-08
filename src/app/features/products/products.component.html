@@ -1,13 +1,17 @@
-<div class="products-container" style="display: flex; gap: 20px;">
+  <div class="products-container">
+  <button *ngIf="isMobile" mat-raised-button class="filter-toggle" (click)="toggleFilters()">
+    <mat-icon>{{ showMobileFilters ? 'close' : 'filter_list' }}</mat-icon>
+    {{ showMobileFilters ? 'Close Filters' : 'Filters' }}
+  </button>
 
-  <div class="filters" style="flex: 0 0 250px;">
+  <div class="filters" [class.mobile-filters]="isMobile" [class.show]="showMobileFilters">
     <app-product-filters
       [currentFilters]="currentFilters"
       (filtersChange)="onFiltersChange($event)">
     </app-product-filters>
   </div>
 
-  <div class="content" style="flex: 1;">
+  <div class="content">
     <div class="header">
       <h1>Our Products</h1>
     </div>
@@ -21,8 +25,11 @@
       <button mat-raised-button color="primary" (click)="loadProducts()">Try Again</button>
     </div>
 
-    <div *ngIf="!loading && !error" class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-      <mat-card *ngFor="let product of products;" class="product-card">
+      <div *ngIf="!loading && !error" class="products-grid">
+      <!-- Display product count for debugging -->
+      <div class="products-count">Showing {{ products.length }} products</div>
+
+      <mat-card *ngFor="let product of products; let i = index" class="product-card" [@fadeInUp]="{value: '', params: {delay: i * 100}}">
         <img mat-card-image [src]="getImageUrl(product.img[0])" [alt]="product.name">
         <mat-card-content>
           <h3>{{ product.name }}</h3>
@@ -44,7 +51,7 @@
       [length]="totalProducts"
       [pageSize]="pageSize"
       [pageIndex]="currentPage"
-      [pageSizeOptions]="[10, 20, 50]"
+      [pageSizeOptions]="[12, 24, 48]"
       (page)="onPageChange($event)"
       aria-label="Select page">
     </mat-paginator>

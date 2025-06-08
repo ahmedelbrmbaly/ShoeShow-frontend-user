@@ -67,15 +67,10 @@ import {User} from './core/models/user.model';
     this.checkScrollPosition();
     this.loadUserData();
 
-    // Set up periodic refresh of cart and wishlist data (every 5 minutes)
+    // Store reference to app component in window object for global access
     if (isPlatformBrowser(this.platformId)) {
-      setInterval(() => {
-        const userId = this.authService.getCurrentUserId();
-        if (userId) {
-          this.fetchCartData(userId);
-          this.fetchWishlistData(userId);
-        }
-      }, 500000); // 5 minutes in milliseconds
+      (window as any).appComponent = this;
+
     }
   }
 
@@ -105,7 +100,7 @@ import {User} from './core/models/user.model';
   }
 
   // Fetch cart data for the user
-  private fetchCartData(userId: number): void {
+  public fetchCartData(userId: number): void {
     this.cartService.getCart(userId).subscribe({
       next: (items) => {
         this.cartCount = items.length;
@@ -118,7 +113,7 @@ import {User} from './core/models/user.model';
   }
 
   // Fetch wishlist data for the user
-  private fetchWishlistData(userId: number): void {
+  public fetchWishlistData(userId: number): void {
     this.wishlistService.getWishlist(userId).subscribe({
       next: (items) => {
         this.wishlistCount = items.length;

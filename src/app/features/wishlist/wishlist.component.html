@@ -17,8 +17,8 @@
     </div>
   } @else {
     <div class="wishlist-grid">
-      @for (item of wishlistItems; track item.productId) {
-        <mat-card class="wishlist-item">
+      @for (item of wishlistItems; track item.productId; let i = $index) {
+        <mat-card class="wishlist-item" data-aos="fade-up" [attr.data-aos-delay]="i * 50">
           <img mat-card-image [src]="getImageUrl(item.img)" [alt]="item.name">
           <mat-card-content>
             <h3>{{ item.name }}</h3>

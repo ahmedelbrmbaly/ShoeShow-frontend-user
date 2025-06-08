@@ -96,6 +96,13 @@ export class ProductDetailsComponent implements OnInit {
             .map(info => info.color)
         )];
         this.loading = false;
+
+        // Initialize/refresh animations after product is loaded
+        setTimeout(() => {
+          if (typeof (window as any).AOS !== 'undefined') {
+            (window as any).AOS.refresh();
+          }
+        }, 100);
       },
       error: (error) => {
         this.error = 'Failed to load product details. Please try again later.';
@@ -168,6 +175,12 @@ export class ProductDetailsComponent implements OnInit {
         quantity: this.addToCartForm.value.quantity
       }).subscribe({
         next: () => {
+          // Update app component's cart count
+          const appComponent = (window as any).appComponent;
+          if (appComponent) {
+            appComponent.fetchCartData(userId);
+          }
+
           this.snackBar.open('Added to cart successfully', 'View Cart', {
             duration: 3000
           }).onAction().subscribe(() => {
@@ -202,6 +215,12 @@ export class ProductDetailsComponent implements OnInit {
       this.submitting = true;
       this.wishlistService.addToWishlist(userId, [this.product.productId]).subscribe({
         next: () => {
+          // Update app component's wishlist count
+          const appComponent = (window as any).appComponent;
+          if (appComponent) {
+            appComponent.fetchWishlistData(userId);
+          }
+
           this.snackBar.open('Added to wishlist successfully', 'View Wishlist', {
             duration: 3000
           }).onAction().subscribe(() => {

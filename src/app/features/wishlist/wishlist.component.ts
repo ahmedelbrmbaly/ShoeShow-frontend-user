@@ -67,6 +67,13 @@ export class WishlistComponent implements OnInit {
     this.wishlistService.removeFromWishlist(userId, productId).subscribe({
       next: () => {
         this.wishlistItems = this.wishlistItems.filter(item => item.productId !== productId);
+
+        // Update app component's wishlist count
+        const appComponent = (window as any).appComponent;
+        if (appComponent) {
+          appComponent.fetchWishlistData(userId);
+        }
+
         this.snackBar.open('Item removed from wishlist', 'Close', { duration: 3000 });
       },
       error: (error) => {

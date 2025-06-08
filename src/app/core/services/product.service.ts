@@ -41,7 +41,11 @@ export class ProductService {
 
       // Handle pagination with defaults
       params = params.append('pageNumber', (filters.pageNumber ?? 0).toString());
-      params = params.append('pageSize', (filters.pageSize ?? 12).toString());
+      // Always set pageSize - use a non-null assertion to force TypeScript to treat it as a number
+      // This is safe because we're checking if it's a number first
+      const pageSize = typeof filters.pageSize === 'number' ? filters.pageSize : 12;
+      params = params.append('pageSize', pageSize.toString());
+      console.log('API request pageSize:', pageSize);
     } else {
       // Default pagination if no filters provided
       params = params.append('pageNumber', '0');

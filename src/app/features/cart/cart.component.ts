@@ -78,9 +78,17 @@ export class CartComponent implements OnInit {
     }).subscribe({
       next: () => {
         item.quantity = newQuantity;
+
+        // We don't need to update cart count here as the number of items remains the same
+        // Only the quantity of an existing item changes
+
         this.snackBar.open('Cart updated successfully', 'Close', { duration: 3000 });
       },
       error: (error) => {
+        if(error.error.message === 'Out of stock') {
+          this.snackBar.open('Item is out of stock. Please reduce quantity.', 'Close', { duration: 3000 });
+          return;
+        }
         this.snackBar.open('Failed to update cart. Please try again.', 'Close', { duration: 3000 });
       }
     });
@@ -94,6 +102,13 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(userId, item.itemId).subscribe({
       next: () => {
         this.cartItems = this.cartItems.filter(i => i.itemId !== item.itemId);
+
+        // Update app component's cart count
+        const appComponent = (window as any).appComponent;
+        if (appComponent) {
+          appComponent.fetchCartData(userId);
+        }
+
         this.snackBar.open('Item removed from cart', 'Close', { duration: 3000 });
       },
       error: (error) => {
@@ -108,6 +123,12 @@ export class CartComponent implements OnInit {
 
     this.cartService.placeOrder(userId).subscribe({
       next: () => {
+        // Update app component's cart count (should be 0 after checkout)
+        const appComponent = (window as any).appComponent;
+        if (appComponent) {
+          appComponent.fetchCartData(userId);
+        }
+
         this.snackBar.open('Order placed successfully!', 'Close', { duration: 3000 });
         this.router.navigate(['/orders']);
       },
