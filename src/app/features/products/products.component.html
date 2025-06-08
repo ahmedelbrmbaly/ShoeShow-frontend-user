@@ -13,7 +13,8 @@
       <div class="filters" [class.mobile-filters]="isMobile" [class.show]="showMobileFilters">
         <app-product-filters
           [currentFilters]="currentFilters"
-          (filtersChange)="onFiltersChange($event)">
+          (filtersChange)="onFiltersChange($event)"
+          (filtersClosed)="toggleFilters()">
         </app-product-filters>
       </div>
     </div>

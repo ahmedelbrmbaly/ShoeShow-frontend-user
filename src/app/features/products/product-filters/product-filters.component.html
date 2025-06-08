@@ -1,7 +1,12 @@
 <div class="filters-container">
   <div class="filters-header">
     <h2>Filters</h2>
-    <button mat-button color="accent" (click)="clearFilters()">Clear All</button>
+    <div class="filters-actions">
+      <button mat-button color="accent" (click)="clearFilters()">Clear All</button>
+      <button mat-icon-button class="close-filters-btn d-block d-md-none" (click)="closeFilters()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
 
   <form [formGroup]="filterForm">

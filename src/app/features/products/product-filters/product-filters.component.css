@@ -9,11 +9,44 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  padding: 0.5rem 0;
 }
 
 .filters-header h2 {
   margin: 0;
   font-size: 1.5rem;
+}
+
+/* Improved styles for filter actions and close button */
+.filters-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Clear All button styling */
+button[color="accent"] {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.close-filters-btn {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  line-height: 40px;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  margin-left: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.close-filters-btn mat-icon {
+  font-size: 22px;
+  line-height: 22px;
+  height: 22px;
+  width: 22px;
 }
 
 .full-width {
@@ -51,8 +84,33 @@ form[formGroup] {
   margin-bottom: 0.5rem;
 }
 
-/* Responsive tweak: On small screens, 1 column */
+/* Mobile specific improvements */
 @media (max-width: 480px) {
+  .filters-header {
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+  }
+
+  .filters-header h2 {
+    font-size: 1.2rem;
+  }
+
+  /* Ensure Clear All button is more prominent on mobile */
+  button[color="accent"] {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background-color: rgba(33, 150, 243, 0.08);
+    border-radius: 4px;
+  }
+
+  /* Additional spacing for close button on mobile */
+  .close-filters-btn {
+    margin-left: 8px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Single column layout on mobile */
   form[formGroup] {
     grid-template-columns: 1fr;
   }
