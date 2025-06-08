@@ -1,5 +1,5 @@
 <!-- HTML Template with Bootstrap Grid Integration -->
-<div class="app-container">
+<div class="app-container d-flex flex-column min-vh-100">
   <mat-toolbar color="primary" class="header navbar fixed-top" [class.header-scrolled]="headerScrolled">
     <div class="container-fluid px-md-4">
       <div class="row align-items-center w-100 g-0">
@@ -114,9 +114,9 @@
     </div>
   </mat-toolbar>
 
-  <!-- Main content area with sidenav -->
-  <div class="content-wrapper">
-    <mat-sidenav-container class="sidenav-container">
+  <!-- Main content area with sidenav - updated for better footer positioning -->
+  <div class="content-wrapper flex-grow-1 d-flex">
+    <mat-sidenav-container class="sidenav-container flex-grow-1 w-100">
       <!-- Mobile sidenav -->
       <mat-sidenav #sidenav mode="over" class="mobile-sidenav" role="navigation" aria-label="Mobile Navigation">
         <!-- Mobile sidenav header -->
@@ -131,14 +131,14 @@
         </div>
 
         <!-- Mobile search component -->
-        <div class="mobile-search px-3 py-3">
-          <div class="input-group">
-            <span class="input-group-text bg-white">
-              <mat-icon>search</mat-icon>
-            </span>
-            <input type="text" class="form-control" placeholder="Search products..." aria-label="Search">
-          </div>
-        </div>
+<!--        <div class="mobile-search px-3 py-3">-->
+<!--          <div class="input-group">-->
+<!--            <span class="input-group-text bg-white">-->
+<!--              <mat-icon>search</mat-icon>-->
+<!--            </span>-->
+<!--            <input type="text" class="form-control" placeholder="Search products..." aria-label="Search">-->
+<!--          </div>-->
+<!--        </div>-->
 
         <!-- Navigation items -->
         <nav class="sidenav-nav">
@@ -217,15 +217,18 @@
         </nav>
       </mat-sidenav>
 
-      <mat-sidenav-content>
-        <div class="content container-fluid pt-5 mt-5">
+      <mat-sidenav-content class="d-flex flex-column">
+        <!-- Main content with Bootstrap container -->
+        <div class="content container-fluid pt-5 mt-5 flex-grow-1">
           <div class="row">
             <div class="col-12">
               <router-outlet></router-outlet>
             </div>
           </div>
         </div>
-        <app-footer></app-footer>
+        
+        <!-- Footer - now it will stay at bottom -->
+        <app-footer class="mt-auto"></app-footer>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>

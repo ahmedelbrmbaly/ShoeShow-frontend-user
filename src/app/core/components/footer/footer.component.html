@@ -1,47 +1,60 @@
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-section">
-      <h3>About ShoeShow</h3>
-      <ul class="footer-links">
-        <li><a routerLink="/about">About Us</a></li>
-        <li><a routerLink="/contact">Contact</a></li>
-        <li><a routerLink="/careers">Careers</a></li>
-      </ul>
+<footer class="footer mt-auto">
+  <div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mb-4">
+      <div class="col">
+        <div class="footer-section">
+          <h3>About ShoeShow</h3>
+          <ul class="footer-links">
+            <li><a routerLink="/about">About Us</a></li>
+            <li><a routerLink="/contact">Contact</a></li>
+            <li><a routerLink="/careers">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <div class="footer-section">
+          <h3>Customer Service</h3>
+          <ul class="footer-links">
+            <li><a routerLink="/shipping">Shipping Info</a></li>
+            <li><a routerLink="/returns">Returns</a></li>
+            <li><a routerLink="/faq">FAQ</a></li>
+            <li><a routerLink="/size-guide">Size Guide</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <div class="footer-section">
+          <h3>My Account</h3>
+          <ul class="footer-links">
+            <li><a routerLink="/profile">Profile</a></li>
+            <li><a routerLink="/orders">Orders</a></li>
+            <li><a routerLink="/wishlist">Wishlist</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <div class="footer-section">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook" class="btn btn-outline-secondary rounded-circle me-2">
+              <mat-icon>facebook</mat-icon>
+            </a>
+            <a href="https://twitter.com" target="_blank" aria-label="Twitter" class="btn btn-outline-secondary rounded-circle me-2">
+              <mat-icon>twitter</mat-icon>
+            </a>
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram" class="btn btn-outline-secondary rounded-circle">
+              <mat-icon>instagram</mat-icon>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="footer-section">
-      <h3>Customer Service</h3>
-      <ul class="footer-links">
-        <li><a routerLink="/shipping">Shipping Info</a></li>
-        <li><a routerLink="/returns">Returns</a></li>
-        <li><a routerLink="/faq">FAQ</a></li>
-        <li><a routerLink="/size-guide">Size Guide</a></li>
-      </ul>
-    </div>
-    <div class="footer-section">
-      <h3>My Account</h3>
-      <ul class="footer-links">
-        <li><a routerLink="/profile">Profile</a></li>
-        <li><a routerLink="/orders">Orders</a></li>
-        <li><a routerLink="/wishlist">Wishlist</a></li>
-      </ul>
-    </div>
-    <div class="footer-section">
-      <h3>Connect With Us</h3>
-      <div class="social-links">
-        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-          <mat-icon>facebook</mat-icon>
-        </a>
-        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-          <mat-icon>twitter</mat-icon>
-        </a>
-        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-          <mat-icon>instagram</mat-icon>
-        </a>
+    <div class="row">
+      <div class="col">
+        <div class="footer-bottom">
+          <p class="mb-0">&copy; {{currentYear}} ShoeShow. All rights reserved.</p>
+        </div>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>&copy; {{currentYear}} ShoeShow. All rights reserved.</p>
-  </div>
 </footer>
-
