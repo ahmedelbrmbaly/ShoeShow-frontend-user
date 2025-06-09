@@ -18,6 +18,7 @@ import {FormsModule} from '@angular/forms';
 import {MatBadge} from '@angular/material/badge';
 import {MatLine} from '@angular/material/core';
 import {User} from './core/models/user.model';
+import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directive';
 
 @Component({
   selector: 'app-root',
@@ -38,6 +39,7 @@ import {User} from './core/models/user.model';
     FormsModule,
     MatBadge,
     MatLine,
+    ScrollToTopDirective
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
