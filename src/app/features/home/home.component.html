@@ -52,11 +52,11 @@
       <div class="products-grid">
         @for (product of bestSellers; track product.productId) {
           <mat-card class="product-card">
-            <div class="card-image-container">
+            <div class="card-image-container" [routerLink]="['/products', product.productId]">
               <img mat-card-image [src]="getImageUrl(product.img[0])" [alt]="product.name">
             </div>
             <mat-card-content>
-              <h3>{{ product.name }}</h3>
+              <h3 class="clickable" [routerLink]="['/products', product.productId]">{{ product.name }}</h3>
               <p class="price">${{ product.price }}</p>
             </mat-card-content>
             <mat-card-actions>
@@ -102,4 +102,3 @@
     </div>
   </section>
 </div>
-

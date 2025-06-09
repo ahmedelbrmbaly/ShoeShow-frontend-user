@@ -46,11 +46,11 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
             <div class="col" *ngFor="let product of products; let i = index">
               <mat-card class="product-card h-100 shadow-sm" [@fadeInUp]="{value: '', params: {delay: i * 100}}">
-                <div class="product-img-container">
+                <div class="product-img-container" [routerLink]="['/products', product.productId]">
                   <img mat-card-image [src]="getImageUrl(product.img[0])" [alt]="product.name" class="product-img">
                 </div>
                 <mat-card-content class="p-3">
-                  <h3 class="product-title">{{ product.name }}</h3>
+                  <h3 class="product-title clickable" [routerLink]="['/products', product.productId]">{{ product.name }}</h3>
                   <p class="price mb-0">${{ product.price }}</p>
                 </mat-card-content>
                 <mat-card-actions class="p-3 pt-0">
