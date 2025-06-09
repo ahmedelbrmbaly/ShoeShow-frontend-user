@@ -229,6 +229,11 @@
 }
 
 .auth-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 80px;
+  padding: 0 16px;
   padding: clamp(8px, 1.5vw, 10px) clamp(16px, 2vw, 24px);
   border-radius: 50px;
   font-weight: 600;

@@ -53,10 +53,10 @@
             <!-- Show Login/Register if not authenticated -->
             <ng-container *ngIf="!(isAuthenticated$ | async); else loggedIn">
               <div class="d-flex gap-2">
-                <button mat-flat-button routerLink="/auth/login" routerLinkActive="active" class="auth-btn login-btn">
+                <button mat-flat-button routerLink="/auth/login" routerLinkActive="active" class="auth-btn login-btn text-center">
                   Login
                 </button>
-                <button mat-flat-button routerLink="/auth/register" routerLinkActive="active" class="auth-btn register-btn d-none d-sm-block">
+                <button mat-flat-button routerLink="/auth/register" routerLinkActive="active" class="auth-btn login-btn text-center">
                   Register
                 </button>
               </div>
