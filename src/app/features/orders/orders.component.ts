@@ -12,7 +12,7 @@ import {
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
   MatTable
 } from '@angular/material/table';
-import {MatChipOption} from '@angular/material/chips';
+import {MatChip} from '@angular/material/chips';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatButton} from '@angular/material/button';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
@@ -22,7 +22,7 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/mat
   templateUrl: './orders.component.html',
   imports: [
     MatTable,
-    MatChipOption,
+    MatChip,
     MatProgressSpinner,
     MatHeaderCell,
     MatColumnDef,
