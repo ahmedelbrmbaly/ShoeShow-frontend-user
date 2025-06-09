@@ -15,6 +15,7 @@ import {
 import {MatChipOption} from '@angular/material/chips';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatButton} from '@angular/material/button';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 
 @Component({
   selector: 'app-orders',
@@ -32,7 +33,11 @@ import {MatButton} from '@angular/material/button';
     MatHeaderRowDef,
     MatRow,
     MatRowDef,
-    MatButton
+    MatButton,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardTitle
   ],
   styleUrls: ['./orders.component.css']
 })
