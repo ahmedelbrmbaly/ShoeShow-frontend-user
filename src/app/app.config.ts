@@ -8,6 +8,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatNativeDateModule } from '@angular/material/core';
 import {ApiLoggingInterceptor} from './core/interceptors/api-logging.interceptor';
+import {groqApiInterceptor} from './core/interceptors/groq-api.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(), // Required for Material animations
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withInterceptors([groqApiInterceptor, authInterceptor])
     ),
     MatNativeDateModule, // Required for Material Datepicker
     {

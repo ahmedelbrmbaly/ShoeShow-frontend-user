@@ -19,6 +19,8 @@ import {MatBadge} from '@angular/material/badge';
 import {MatLine} from '@angular/material/core';
 import {User} from './core/models/user.model';
 import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directive';
+import { ChatComponent } from './features/chat/chat.component';
+import { ChatModule } from './features/chat/chat.module';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +41,8 @@ import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directiv
     FormsModule,
     MatBadge,
     MatLine,
-    ScrollToTopDirective
+    ScrollToTopDirective,
+    ChatModule // Import ChatModule to make ChatComponent available
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
