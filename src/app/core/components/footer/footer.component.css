@@ -86,11 +86,10 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.social-links mat-icon {
-  font-size: 18px;
-  height: 18px;
-  width: 18px;
-  line-height: 18px;
+.social-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 /* Responsive adjustments */
