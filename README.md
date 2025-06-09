@@ -1,59 +1,79 @@
-# Shoeshow
+# ShoeShow E-commerce Web Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+ShoeShow is a modern, responsive e-commerce web application for premium footwear, built with Angular 20+ and Angular Material. It features user authentication, product browsing, shopping cart, wishlist, order management, and a mobile-friendly UI.
 
-## Development server
+## Features
+- User authentication (login/register)
+- Product catalog with filters and details
+- Shopping cart and wishlist management
+- Order history and user profile
+- Responsive design with Angular Material and Bootstrap grid
+- Animations and enhanced UX
 
+## Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18+ recommended)
+- [Angular CLI](https://angular.dev/tools/cli) (v20+)
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone <repo-url>
+   cd ShoeShow-frontend-user
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Development server
 To start a local development server, run:
-
 ```bash
 ng serve
 ```
+Open your browser at [http://localhost:4200/](http://localhost:4200/). The app reloads automatically on code changes.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
+### Building
+To build the project for production:
 ```bash
 ng build
 ```
+The build artifacts will be stored in the `dist/` directory.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+### Running unit tests
+To execute unit tests with [Karma](https://karma-runner.github.io):
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### Running end-to-end tests
+For end-to-end (e2e) testing:
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Project Structure
+- `src/app/` – Main application code
+  - `core/` – Core modules, services, guards, and shared components
+  - `features/` – Feature modules (auth, products, cart, wishlist, profile, orders, about, home)
+  - `shared/` – Shared directives and utilities
+  - `assets/` – Static assets (images, icons)
+
+## Code Scaffolding
+To generate a new component:
+```bash
+ng generate component component-name
+```
+For a complete list of schematics:
+```bash
+ng generate --help
+```
 
 ## Additional Resources
+- [Angular CLI Documentation](https://angular.dev/tools/cli)
+- [Angular Material](https://material.angular.io/)
+- [Bootstrap](https://getbootstrap.com/)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## License
+This project is for educational purposes.
