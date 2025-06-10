@@ -1,4 +1,3 @@
-
 /* CSS Styles */
 :host {
   display: flex;
@@ -53,6 +52,20 @@
   flex-wrap: nowrap;
 }
 
+/* Enhanced Header for Bootstrap Grid */
+.header.navbar {
+  padding: 0;
+  z-index: 1030;
+}
+
+.header .container-fluid {
+  height: 100%;
+}
+
+.header .row {
+  min-height: 64px;
+}
+
 /* Logo with modern styling */
 .logo-container {
   display: flex;
@@ -65,7 +78,30 @@
   font-weight: 700;
   text-decoration: none;
   color: white;
-  margin-right: clamp(16px, 3vw, 32px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  background: linear-gradient(45deg, #fff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo adjustments for Bootstrap */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -193,6 +229,11 @@
 }
 
 .auth-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 80px;
+  padding: 0 16px;
   padding: clamp(8px, 1.5vw, 10px) clamp(16px, 2vw, 24px);
   border-radius: 50px;
   font-weight: 600;
@@ -429,6 +470,17 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  touch-action: pan-y;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sidenav container adjustments */
+.sidenav-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 64px);
 }
 
 /* Modern Mobile Sidenav */
@@ -437,6 +489,22 @@
   background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
   box-shadow: var(--shadow-heavy);
   border-right: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overscroll-behavior: contain; /* Prevents scroll chaining */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  height: 100%;
+  max-height: 100vh;
+}
+
+/* Mobile navigation adjustments for Bootstrap */
+.mobile-sidenav {
+  width: 85%;
+  max-width: 320px;
+  height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .sidenav-header {
@@ -479,9 +547,27 @@
   box-shadow: var(--shadow-light);
 }
 
-/* Sidenav Navigation */
+/* Make the scrollbar more touch-friendly */
+.mobile-sidenav::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+
+.mobile-sidenav::-webkit-scrollbar-thumb {
+  background-color: rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+}
+
+.mobile-sidenav::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(102, 126, 234, 0.5);
+}
+
+/* Enhanced Sidenav Navigation Items */
 .sidenav-nav {
   padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .nav-item {
@@ -489,26 +575,60 @@
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  overflow: visible; /* Changed from hidden to allow badge to show properly */
+  min-height: 56px; /* Increased height for better touch targets and badge accommodation */
+  padding: 6px 8px; /* Added horizontal padding */
+  display: flex !important;
+  align-items: center;
+}
+
+/* Better icon alignment and sizing */
+.nav-item mat-icon[matlisticon] {
+  margin-right: 20px !important;
+  font-size: 22px;
+  height: 22px;
+  width: 22px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Fixing badge position */
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+  right: -10px;
+  top: -5px;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  font-size: 11px;
+}
+
+/* Improving text alignment */
+.nav-item [matline] {
+  margin: 0 !important;
+  font-size: 15px;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  display: block !important;
+  line-height: 1.5;
+  font-weight: 500;
 }
 
-.nav-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 4px;
-  background: var(--primary-gradient);
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
+/* Active state improvements */
+.nav-item.active {
+  background: linear-gradient(135deg, var(--bright-blue), var(--electric-violet));
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-.nav-item:hover::before,
-.nav-item.active::before {
-  transform: scaleY(1);
+.nav-item.active mat-icon {
+  color: white;
 }
 
+/* Hover state improvements */
 .nav-item:hover {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
@@ -516,87 +636,17 @@
   box-shadow: var(--shadow-light);
 }
 
-.nav-item.active {
-  background: linear-gradient(135deg, var(--bright-blue), var(--electric-violet));
-  color: white;
+/* List group item adjustments for material design */
+.list-group-item {
+  border: none;
+  background-color: transparent;
 }
 
-.nav-item.active mat-icon {
-  color: white;
-}
-
-.nav-divider {
-  margin: 16px 0;
-  background: var(--gray-400);
-}
-
-.auth-item {
-  background: var(--success-gradient);
-  color: white;
-}
-
-.auth-item mat-icon {
-  color: white;
-}
-
-.mobile-user-info {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px;
-  margin: 16px;
-  border-radius: 16px;
-  background: white;
-  color: black;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #e0e0e0;
-  box-shadow: var(--shadow-light);
-}
-
-.mobile-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--secondary-gradient);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.mobile-avatar .avatar-initials {
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.mobile-user-details h4 {
-  margin: 0 0 4px 0;
-  font-weight: 700;
-  color: #000000;
-  letter-spacing: 0.3px;
-}
-
-.mobile-user-details p {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #000000;
-  letter-spacing: 0.2px;
-}
-
-.logout-item {
-  color: var(--hot-red);
-  border: 1px solid var(--hot-red);
-  background: rgba(255, 107, 107, 0.1);
-}
-
-.logout-item mat-icon {
-  color: var(--hot-red);
+/* Improved divider */
+.dropdown-divider {
+  margin: 16px 24px;
+  background-color: rgba(0, 0, 0, 0.12);
+  height: 1px;
 }
 
 /* Content */
@@ -609,10 +659,40 @@
   background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
 }
 
-mat-sidenav-content {
+/* Mobile user profile styling - updated */
+.mobile-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--secondary-gradient);
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Ensure card body padding is not too large */
+.mobile-user-info .card-body {
+  padding: 12px !important;
+}
+
+/* Make sure the user details text is not too large */
+.mobile-user-details .card-title {
+  font-size: 0.95rem;
+  margin-bottom: 2px !important;
+}
+
+.mobile-user-details .card-text {
+  font-size: 0.8rem;
 }
 
 /* Responsive Design */
@@ -789,4 +869,56 @@ a:focus {
 
 .mat-badge-content {
   animation: pulse 2s infinite;
+}
+
+/* Bootstrap Integration Styles */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: calc(100vh - 64px);
+}
+
+/* Enhanced Header for Bootstrap Grid */
+.header.navbar {
+  padding: 0;
+  z-index: 1030;
+}
+
+.header .container-fluid {
+  height: 100%;
+}
+
+.header .row {
+  min-height: 64px;
+}
+
+/* Sidenav container adjustments */
+.sidenav-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 64px);
+}
+
+/* Mobile navigation adjustments for Bootstrap */
+.mobile-sidenav {
+  width: 85%;
+  max-width: 320px;
+  height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Badge positioning fix */
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+  right: -6px;
 }

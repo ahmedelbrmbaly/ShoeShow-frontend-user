@@ -18,21 +18,47 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease-in-out;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .wishlist-item:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-.wishlist-item img {
-  height: 200px;
-  object-fit: cover;
+.product-img-container {
+  height: 220px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
 }
 
-.wishlist-item h3 {
+.product-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.wishlist-item:hover .product-img-container img {
+  transform: scale(1.05);
+}
+
+.product-title {
   margin: 0;
   font-size: 1.1rem;
   color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.product-title:hover {
+  color: #2196f3;
 }
 
 .price {
@@ -77,5 +103,9 @@ mat-card-actions {
 
   .wishlist-grid {
     gap: 1rem;
+  }
+
+  .product-img-container {
+    height: 180px;
   }
 }

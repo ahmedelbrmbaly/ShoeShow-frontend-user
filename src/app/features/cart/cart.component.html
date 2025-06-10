@@ -1,109 +1,169 @@
-<div class="cart-container">
-  <h1>Shopping Cart</h1>
+<div class="container-fluid cart-container">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="fw-bold">Shopping Cart</h1>
+    </div>
+  </div>
 
   @if (loading) {
-    <div class="loading-container">
-      <mat-spinner></mat-spinner>
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center align-items-center loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
     </div>
   } @else if (error) {
-    <div class="error-container">
-      <p>{{ error }}</p>
-      <button mat-raised-button color="primary" (click)="loadCart()">Try Again</button>
+    <div class="row">
+      <div class="col-12 d-flex flex-column justify-content-center align-items-center error-container">
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="loadCart()">Try Again</button>
+      </div>
     </div>
   } @else if (cartItems.length === 0) {
-    <div class="empty-cart" data-aos="fade-up">
-      <p>Your cart is empty</p>
-      <button mat-raised-button color="primary" (click)="continueShopping()">Continue Shopping</button>
+    <div class="row">
+      <div class="col-12 d-flex flex-column justify-content-center align-items-center empty-cart" data-aos="fade-up">
+        <p class="mb-3 fs-5">Your cart is empty</p>
+        <button mat-raised-button color="primary" (click)="continueShopping()">Continue Shopping</button>
+      </div>
     </div>
   } @else {
-    <div class="cart-content" data-aos="fade-up">
-      <table mat-table [dataSource]="cartItems" class="cart-table">
-        <!-- Image Column -->
-        <ng-container matColumnDef="image">
-          <th mat-header-cell *matHeaderCellDef>Product</th>
-          <td mat-cell *matCellDef="let item">
-            <img [src]="getImageUrl(item.img)" [alt]="item.name" class="product-image">
-          </td>
-        </ng-container>
+    <div class="row" data-aos="fade-up">
+      <!-- Table visible only on tablets and larger screens -->
+      <div class="col-12 d-none d-md-block mb-4">
+        <div class="table-responsive">
+          <table mat-table [dataSource]="cartItems" class="cart-table w-100">
+            <!-- Image Column -->
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef>Product</th>
+              <td mat-cell *matCellDef="let item">
+                <img [src]="getImageUrl(item.img)" [alt]="item.name" class="product-image" [routerLink]="['/products', item.productId]" style="cursor: pointer;">
+              </td>
+            </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let item">{{ item.name }}</td>
-        </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let item" [routerLink]="['/products', item.productId]" style="cursor: pointer;">{{ item.name }}</td>
+            </ng-container>
 
-        <!-- Size Column -->
-        <ng-container matColumnDef="size">
-          <th mat-header-cell *matHeaderCellDef>Size</th>
-          <td mat-cell *matCellDef="let item">{{ item.size }}</td>
-        </ng-container>
+            <!-- Size Column -->
+            <ng-container matColumnDef="size">
+              <th mat-header-cell *matHeaderCellDef>Size</th>
+              <td mat-cell *matCellDef="let item">{{ item.size }}</td>
+            </ng-container>
 
-        <!-- Color Column -->
-        <ng-container matColumnDef="color">
-          <th mat-header-cell *matHeaderCellDef>Color</th>
-          <td mat-cell *matCellDef="let item">
-            <div class="color-display">
-              <span class="color-circle" [style.background-color]="item.color.toLowerCase()"></span>
-              {{ item.color }}
-            </div>
-          </td>
-        </ng-container>
+            <!-- Color Column -->
+            <ng-container matColumnDef="color">
+              <th mat-header-cell *matHeaderCellDef>Color</th>
+              <td mat-cell *matCellDef="let item">
+                <div class="color-display">
+                  <span class="color-circle" [style.background-color]="item.color.toLowerCase()"></span>
+                  {{ item.color }}
+                </div>
+              </td>
+            </ng-container>
 
-        <!-- Price Column -->
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef>Price</th>
-          <td mat-cell *matCellDef="let item">${{ item.price }}</td>
-        </ng-container>
+            <!-- Price Column -->
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef>Price</th>
+              <td mat-cell *matCellDef="let item">${{ item.price }}</td>
+            </ng-container>
 
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef>Quantity</th>
-          <td mat-cell *matCellDef="let item">
-            <div class="quantity-controls">
-              <button mat-icon-button (click)="updateQuantity(item, item.quantity - 1)">
-                <mat-icon>remove</mat-icon>
-              </button>
-              <span>{{ item.quantity }}</span>
-              <button mat-icon-button (click)="updateQuantity(item, item.quantity + 1)">
-                <mat-icon>add</mat-icon>
-              </button>
-            </div>
-          </td>
-        </ng-container>
+            <!-- Quantity Column -->
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let item">
+                <div class="quantity-controls">
+                  <button mat-icon-button (click)="updateQuantity(item, item.quantity - 1)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                  <span>{{ item.quantity }}</span>
+                  <button mat-icon-button (click)="updateQuantity(item, item.quantity + 1)">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
 
-        <!-- Total Column -->
-        <ng-container matColumnDef="total">
-          <th mat-header-cell *matHeaderCellDef>Total</th>
-          <td mat-cell *matCellDef="let item">${{ item.price * item.quantity }}</td>
-        </ng-container>
+            <!-- Total Column -->
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef>Total</th>
+              <td mat-cell *matCellDef="let item">${{ item.price * item.quantity }}</td>
+            </ng-container>
 
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let item">
-            <button mat-icon-button color="warn" (click)="removeItem(item)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let item">
+                <button mat-icon-button color="warn" (click)="removeItem(item)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <div class="cart-summary">
-        <div class="total">
-          <span>Total:</span>
-          <span class="total-amount">${{ getTotalPrice() }}</span>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
         </div>
-        <div class="cart-actions">
-          <button mat-stroked-button color="primary" (click)="continueShopping()">
-            Continue Shopping
-          </button>
-          <button mat-raised-button color="primary" (click)="checkout()">
-            Checkout
-          </button>
-        </div>
+      </div>
+
+      <!-- Mobile card view for small screens -->
+      <div class="col-12 d-md-none mb-4">
+        @for (item of cartItems; track item.itemId) {
+          <mat-card class="mb-3">
+            <div class="row g-0">
+              <div class="col-4" [routerLink]="['/products', item.productId]" style="cursor: pointer;">
+                <img [src]="getImageUrl(item.img)" [alt]="item.name" class="img-fluid rounded product-image-mobile">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title" [routerLink]="['/products', item.productId]" style="cursor: pointer;">{{ item.name }}</h5>
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="color-circle me-2" [style.background-color]="item.color.toLowerCase()"></span>
+                    <span class="me-3">{{ item.color }}</span>
+                    <span>Size: {{ item.size }}</span>
+                  </div>
+                  <p class="card-text mb-1">${{ item.price }} × {{ item.quantity }}</p>
+                  <p class="card-text fw-bold mb-2">${{ item.price * item.quantity }}</p>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="quantity-controls">
+                      <button mat-mini-fab color="primary" (click)="updateQuantity(item, item.quantity - 1)">
+                        <mat-icon>remove</mat-icon>
+                      </button>
+                      <span class="mx-2">{{ item.quantity }}</span>
+                      <button mat-mini-fab color="primary" (click)="updateQuantity(item, item.quantity + 1)">
+                        <mat-icon>add</mat-icon>
+                      </button>
+                    </div>
+                    <button mat-icon-button color="warn" (click)="removeItem(item)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        }
+      </div>
+
+      <!-- Cart summary section -->
+      <div class="col-12 col-md-6 col-lg-4 ms-auto">
+        <mat-card class="cart-summary">
+          <mat-card-content>
+            <div class="total mb-3">
+              <span class="fs-5">Total:</span>
+              <span class="total-amount">${{ getTotalPrice() }}</span>
+            </div>
+            <div class="cart-actions">
+              <button mat-stroked-button color="primary" class="w-100 mb-2" (click)="continueShopping()">
+                Continue Shopping
+              </button>
+              <button mat-raised-button color="primary" class="w-100" (click)="checkout()">
+                Checkout
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   }

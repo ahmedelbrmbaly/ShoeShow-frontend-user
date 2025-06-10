@@ -125,6 +125,7 @@
 .card-image-container {
   height: 280px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .card-image-container img {
@@ -136,6 +137,16 @@
 
 .product-card:hover .card-image-container img {
   transform: scale(1.05);
+}
+
+h3.clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+h3.clickable:hover {
+  color: #2196f3;
+  text-decoration: underline;
 }
 
 /* Categories Section */
