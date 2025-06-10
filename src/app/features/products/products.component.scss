@@ -6,10 +6,12 @@
   width: 100%;
   margin: 0 auto;
   max-width: 1800px;
+  min-height: calc(100vh - 64px);
 
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 10px;
+    padding: 10px;
   }
 }
 
@@ -21,13 +23,18 @@
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  width: max-content;
+  padding: 10px;
+
+  mat-icon {
+    margin-right: 8px;
+  }
 }
 
-// Filters sidebar
+// Filters sidebar - improved positioning for mobile
 .filters {
-  flex: 0 0 250px;
+  position: relative;
 
   &.mobile-filters {
     position: fixed;
@@ -36,9 +43,10 @@
     width: 280px;
     height: 100vh;
     background: white;
-    z-index: 100;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1100; // Increased z-index to appear above navbar
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    padding-top: 70px; // Added padding top to account for navbar height
     transform: translateX(-100%);
     transition: transform 0.3s ease;
     overflow-y: auto;
@@ -55,12 +63,99 @@
   min-width: 0; // Prevent flex item from overflowing
 }
 
+// Product card styling
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backface-visibility: hidden; // Prevent flickering during animations
+  transform-style: preserve-3d; // Better 3D performance
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .product-img-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 100%; // 1:1 Aspect ratio
+    background: #f8f8f8;
+    cursor: pointer;  // Add pointer cursor for better UX
+
+    .product-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+  }
+
+  &:hover .product-img {
+    transform: scale(1.05);
+  }
+
+  .product-title {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.clickable {
+      cursor: pointer;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #2196f3;  // Change color on hover for better feedback
+        text-decoration: underline;  // Underline on hover for better feedback
+      }
+    }
+  }
+
+  .price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2196f3;
+  }
+
+  mat-card-actions {
+    margin-top: auto;
+  }
+}
+
 // Products count display
 .products-count {
   grid-column: 1/-1;
   margin-bottom: 15px;
   color: #666;
   font-size: 0.9rem;
+}
+
+// No products message
+.no-products {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Loading and error containers
+.loading-container,
+.error-container {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 // Product grid with responsive columns
@@ -89,62 +184,8 @@
   }
 }
 
-// Product card styling
-.product-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  backface-visibility: hidden; // Prevent flickering during animations
-  transform-style: preserve-3d; // Better 3D performance
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
-
-  img {
-    height: 220px;
-    object-fit: cover;
-    width: 100%;
-    transition: transform 0.5s ease;
-  }
-
-  &:hover img {
-    transform: scale(1.05);
-  }
-
-  mat-card-content {
-    flex-grow: 1;
-    padding: 16px;
-
-    h3 {
-      margin: 0 0 8px;
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: #333;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .price {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #2196f3;
-      margin: 8px 0;
-    }
-  }
-
-  mat-card-actions {
-    padding: 8px 16px 16px;
-    display: flex;
-    justify-content: center;
-
-    button {
-      width: 100%;
-    }
-  }
+// Ensure pagination is responsive
+mat-paginator {
+  width: 100%;
+  background: transparent;
 }

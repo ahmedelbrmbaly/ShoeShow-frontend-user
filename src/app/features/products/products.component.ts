@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { trigger, transition, style, animate, state, query, stagger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -63,14 +63,53 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private productService: ProductService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     // Force pageSize to exactly 12 when component initializes
     this.pageSize = 12;
     console.log('Component initialized with pageSize:', this.pageSize);
-    this.loadProducts();
+
+    // Read filter parameters from URL query params
+    this.route.queryParams.subscribe(params => {
+      const filters: ProductFilters = {};
+
+      // Extract all possible filter parameters from URL
+      if (params['category']) {
+        filters.category = params['category'];
+      }
+      if (params['gender']) {
+        filters.gender = params['gender'];
+      }
+      if (params['brand']) {
+        // Handle both single value and array
+        filters.brand = Array.isArray(params['brand']) ? params['brand'] : [params['brand']];
+      }
+      if (params['size']) {
+        // Handle both single value and array
+        filters.size = Array.isArray(params['size']) ? params['size'] : [params['size']];
+      }
+      if (params['color']) {
+        // Handle both single value and array
+        filters.color = Array.isArray(params['color']) ? params['color'] : [params['color']];
+      }
+      if (params['orderBy']) {
+        filters.orderBy = params['orderBy'];
+      }
+      if (params['keyWord']) {
+        filters.keyWord = params['keyWord'];
+      }
+
+      // Apply filters and update the filter component
+      if (Object.keys(filters).length > 0) {
+        this.currentFilters = filters;
+      }
+
+      this.loadProducts();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -106,12 +145,50 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     if (this.paginator) {
       this.paginator.pageIndex = 0;
     }
+
+    // Update URL query parameters to match the current filters
+    this.updateUrlQueryParams();
+
     this.loadProducts();
 
     // Close mobile filters if they're open
     if (this.isMobile && this.showMobileFilters) {
       this.showMobileFilters = false;
     }
+  }
+
+  private updateUrlQueryParams(): void {
+    // Convert current filters to query params
+    const queryParams: any = {};
+
+    if (this.currentFilters.category) {
+      queryParams.category = this.currentFilters.category;
+    }
+    if (this.currentFilters.gender) {
+      queryParams.gender = this.currentFilters.gender;
+    }
+    if (this.currentFilters.brand && this.currentFilters.brand.length) {
+      queryParams.brand = this.currentFilters.brand;
+    }
+    if (this.currentFilters.size && this.currentFilters.size.length) {
+      queryParams.size = this.currentFilters.size;
+    }
+    if (this.currentFilters.color && this.currentFilters.color.length) {
+      queryParams.color = this.currentFilters.color;
+    }
+    if (this.currentFilters.orderBy) {
+      queryParams.orderBy = this.currentFilters.orderBy;
+    }
+    if (this.currentFilters.keyWord) {
+      queryParams.keyWord = this.currentFilters.keyWord;
+    }
+
+    // Update the URL without reloading the page
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge', // remove to replace all query params by provided
+    });
   }
 
   onPageChange(event: PageEvent): void {

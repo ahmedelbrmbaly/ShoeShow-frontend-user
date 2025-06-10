@@ -1,15 +1,13 @@
-.orders-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Custom styling to complement Bootstrap grid system */
+.container {
+  padding: 2rem 15px;
 }
 
-.orders-container h1 {
-  margin-bottom: 2rem;
+h1 {
+  margin-bottom: 1.5rem;
 }
 
 .orders-content {
-  background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -19,15 +17,9 @@
   width: 100%;
 }
 
-.loading-container,
 .error-container,
 .empty-orders {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-  text-align: center;
+  padding: 2rem 0;
 }
 
 .error-container p {
@@ -54,18 +46,83 @@ tr.mat-row:hover {
   font-size: 12px;
 }
 
+/* Mobile order card styles */
+.order-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+/* Status header styling for better alignment */
+.status-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 16px 16px 0;
+}
+
+.status-header mat-card-title {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.status-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.order-card mat-card-content {
+  padding-top: 10px;
+}
+
+.order-detail-label {
+  font-weight: 500;
+  color: #666;
+}
+
+.order-detail-value {
+  text-align: right;
+  font-weight: 400;
+}
+
+/* Mobile-specific styles */
 @media (max-width: 768px) {
-  .orders-container {
+  .container {
     padding: 1rem;
   }
 
-  .orders-table {
-    display: block;
-    overflow-x: auto;
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  th.mat-header-cell,
-  td.mat-cell {
-    padding: 0.5rem;
+  .order-card {
+    margin-bottom: 15px;
+  }
+
+  .order-card mat-card-title {
+    font-size: 1rem;
+  }
+
+  .mat-chip-option {
+    font-size: 10px;
+    min-height: 20px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 576px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  .order-detail-label,
+  .order-detail-value {
+    font-size: 0.9rem;
   }
 }

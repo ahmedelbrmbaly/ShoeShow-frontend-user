@@ -7,24 +7,28 @@ import { AuthService } from '../../core/services/auth.service';
 import { WishlistItem } from '../../core/models/product.model';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIcon} from '@angular/material/icon';
-import {MatCard, MatCardActions, MatCardContent, MatCardImage} from '@angular/material/card';
+import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
 import { environment } from '../../../environments/environment';
 import {MatButton, MatIconButton} from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
   imports: [
+    CommonModule,
+    RouterModule,
     MatProgressSpinner,
     MatIcon,
     MatCardActions,
     MatCard,
     MatCardContent,
     MatButton,
-    MatCardImage,
     MatIconButton
   ],
-  styleUrls: ['./wishlist.component.css']
+  styleUrls: ['./wishlist.component.css'],
+  standalone: true
 })
 export class WishlistComponent implements OnInit {
   wishlistItems: WishlistItem[] = [];
