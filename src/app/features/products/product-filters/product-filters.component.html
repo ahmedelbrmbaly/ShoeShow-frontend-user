@@ -17,7 +17,7 @@
 
     <mat-form-field class="full-width">
       <mat-label>Sort By</mat-label>
-      <mat-select formControlName="orderBy">
+      <mat-select formControlName="orderBy" #orderBySelect (selectionChange)="onSelectChange(orderBySelect)">
         <mat-option>None</mat-option>
         @for (option of sortOptions; track option.value) {
           <mat-option [value]="option.value">{{ option.label }}</mat-option>
@@ -27,7 +27,7 @@
 
     <mat-form-field class="full-width">
       <mat-label>Gender</mat-label>
-      <mat-select formControlName="gender">
+      <mat-select formControlName="gender" #genderSelect (selectionChange)="onSelectChange(genderSelect)">
         <mat-option>All</mat-option>
         @for (gender of genders; track gender) {
           <mat-option [value]="gender">{{ gender }}</mat-option>
@@ -37,7 +37,7 @@
 
     <mat-form-field class="full-width">
       <mat-label>Category</mat-label>
-      <mat-select formControlName="category">
+      <mat-select formControlName="category" #categorySelect (selectionChange)="onSelectChange(categorySelect)">
         <mat-option>All</mat-option>
         @for (category of categories; track category) {
           <mat-option [value]="category">{{ category }}</mat-option>
@@ -47,7 +47,7 @@
 
     <mat-form-field class="full-width">
       <mat-label>Brands</mat-label>
-      <mat-select formControlName="brand" multiple>
+      <mat-select formControlName="brand" multiple #brandSelect (selectionChange)="onSelectChange(brandSelect)">
         @for (brand of brands; track brand) {
           <mat-option [value]="brand">{{ brand }}</mat-option>
         }
@@ -56,7 +56,7 @@
 
     <mat-form-field class="full-width">
       <mat-label>Sizes</mat-label>
-      <mat-select formControlName="size" multiple>
+      <mat-select formControlName="size" multiple #sizeSelect (selectionChange)="onSelectChange(sizeSelect)">
         @for (size of sizes; track size) {
           <mat-option [value]="size">{{ size.replace('SIZE_', '') }}</mat-option>
         }
@@ -65,7 +65,7 @@
 
     <mat-form-field class="full-width">
       <mat-label>Colors</mat-label>
-      <mat-select formControlName="color" multiple>
+      <mat-select formControlName="color" multiple #colorSelect (selectionChange)="onSelectChange(colorSelect)">
         @for (color of colors; track color) {
           <mat-option [value]="color">
             <span class="color-option">
