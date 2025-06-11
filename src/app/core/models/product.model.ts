@@ -13,6 +13,7 @@ export interface ProductInfo {
 }
 
 export interface Product {
+    isNew: any;
     productId: number;
     name: string;
     description: string;

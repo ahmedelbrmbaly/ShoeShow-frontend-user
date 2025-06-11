@@ -48,6 +48,7 @@
               <mat-card class="product-card h-100 shadow-sm" [@fadeInUp]="{value: '', params: {delay: i * 100}}">
                 <div class="product-img-container" [routerLink]="['/products', product.productId]">
                   <img mat-card-image [src]="getImageUrl(product.img[0])" [alt]="product.name" class="product-img">
+                  <span class="new-label" *ngIf="product.isNew">NEW</span>
                 </div>
                 <mat-card-content class="p-3">
                   <h3 class="product-title clickable" [routerLink]="['/products', product.productId]">{{ product.name }}</h3>

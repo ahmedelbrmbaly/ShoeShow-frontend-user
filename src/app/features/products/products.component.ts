@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, HostListener, OnDestroy } from '@angular/core';
 import { trigger, transition, style, animate, state, query, stagger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { ProductService } from '../../core/services/product.service';
 import { Product, ProductFilters } from '../../core/models/product.model';
 import { ProductFiltersComponent } from './product-filters/product-filters.component';
 import { environment } from '../../../environments/environment';
+import { ProductSseService } from '../../core/services/product-sse.service';
 
 @Component({
   selector: 'app-products',
@@ -40,7 +41,7 @@ import { environment } from '../../../environments/environment';
     ProductFiltersComponent
   ]
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   products: Product[] = [];
@@ -63,6 +64,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private productService: ProductService,
+    private productSseService: ProductSseService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router
@@ -110,6 +112,31 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
       this.loadProducts();
     });
+
+    // Connect to SSE and listen for new products
+    this.productSseService.connect();
+    this.productSseService.onNewProduct().subscribe(rawProduct => {
+      // Only add the new product if we're on the first page and there are no filters
+      if (this.currentPage === 0 && Object.keys(this.currentFilters).length === 0) {
+        // Add isNew flag to the product
+        const productWithNewFlag = {
+          ...rawProduct,
+          isNew: true
+        };
+        // Add the new product at the beginning of the array
+        this.products = [productWithNewFlag, ...this.products];
+        // Remove the last product if we've exceeded pageSize
+        if (this.products.length > this.pageSize) {
+          this.products.pop();
+        }
+        this.totalProducts++;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.productSseService.disconnect();
   }
 
   ngAfterViewInit(): void {
