@@ -158,9 +158,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   private updateUrlQueryParams(): void {
-    // Convert current filters to query params
     const queryParams: any = {};
 
+    // Only add filters to queryParams if they are set (ignore UI-only values for enums)
     if (this.currentFilters.category) {
       queryParams.category = this.currentFilters.category;
     }
@@ -179,15 +179,14 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     if (this.currentFilters.orderBy) {
       queryParams.orderBy = this.currentFilters.orderBy;
     }
-    if (this.currentFilters.keyWord) {
+    if (this.currentFilters.keyWord && this.currentFilters.keyWord.trim() !== '') {
       queryParams.keyWord = this.currentFilters.keyWord;
     }
 
-    // Update the URL without reloading the page
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: queryParams,
-      queryParamsHandling: 'merge', // remove to replace all query params by provided
+      queryParamsHandling: '',
     });
   }
 

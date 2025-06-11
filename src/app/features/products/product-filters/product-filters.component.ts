@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ProductFilters } from '../../../core/models/product.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectModule, MatSelect } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
@@ -91,5 +91,10 @@ export class ProductFiltersComponent implements OnInit {
 
   closeFilters(): void {
     this.filtersClosed.emit();
+  }
+
+  onSelectChange(select: MatSelect): void {
+    // Close the dropdown after selection
+    select.close();
   }
 }
