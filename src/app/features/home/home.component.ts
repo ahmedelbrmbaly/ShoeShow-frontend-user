@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   getImageUrl(imagePath: string): string {
-    return `http://localhost:8081/${imagePath}`;
+    return `http://185.69.166.150:8081/${imagePath}`;
   }
 
   onSubscribe(): void {
